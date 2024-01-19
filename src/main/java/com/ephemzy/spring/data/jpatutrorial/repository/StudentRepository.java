@@ -3,6 +3,7 @@ package com.ephemzy.spring.data.jpatutrorial.repository;
 import com.ephemzy.spring.data.jpatutrorial.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -34,4 +35,12 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             nativeQuery = true
     )
     Student getStudentByEmailAddressNative(String emailId);
+
+    //native query named param
+    @Query(
+            value = "SELECT * FROM tbl_student s WHERE s.email_address = :emailId",
+            nativeQuery = true
+    )
+    Student getStudentByEmailAddressNativeNamedParam(@Param("emailId") String emailId);
+
 }
