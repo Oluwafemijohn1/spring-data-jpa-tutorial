@@ -1,7 +1,9 @@
 package com.ephemzy.spring.data.jpatutrorial.repository;
 
 import com.ephemzy.spring.data.jpatutrorial.entity.Student;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -42,5 +44,14 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             nativeQuery = true
     )
     Student getStudentByEmailAddressNativeNamedParam(@Param("emailId") String emailId);
+
+    //Updating record
+    @Modifying
+    @Transactional
+    @Query(
+            value = "UPDATE tbl_student SET first_name = ?1 WHERE email_address = ?2",
+            nativeQuery = true
+    )
+    int updateStudentNameById(String firstName, String emailId);
 
 }
