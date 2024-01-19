@@ -40,15 +40,15 @@ class StudentRepositoryTest {
     @Test
     public void saveStudentWithGuardian() {
         Guardian guardian = Guardian.builder()
-                .email("guardian@gmail.com")
-                .mobile("081111111111")
-                .name("My Guardian")
+                .email("guardian2@gmail.com")
+                .mobile("080212345672")
+                .name("Guardian2")
                 .build();
 
         Student student = Student.builder()
-                .emailId("femiogun3@gmail.com")
-                .firstName("femi")
-                .lastName("ogun")
+                .emailId("tolaogun2@gmail.com")
+                .firstName("Tolani2")
+                .lastName("ogun2")
                 .guardian(guardian)
                 .build();
 
@@ -59,5 +59,30 @@ class StudentRepositoryTest {
     public void printAllStudent() {
         List<Student> studentList = studentRepository.findAll();
         System.out.println("studentList = " + studentList);
+    }
+
+    @Test
+    public void findStudentByFirstName() {
+        List<Student> students = studentRepository.findByFirstName("Tolani2");
+        System.out.println("Students by first name = " + students);
+    }
+
+    @Test
+    public void findByFirstNameContaining() {
+        List<Student> students = studentRepository.findByFirstNameContaining("to");
+        System.out.println("Students  = " + students);
+    }
+
+    @Test
+    public void printStudentBasedOnGuardianName() {
+        List<Student> students = studentRepository.findByGuardianName("to");
+        System.out.println("Students  = " + students);
+    }
+
+    @Test
+    public void findByLastNameNotNull() {
+        List<Student> students = studentRepository.findByLastNameNotNull();
+        System.out.println("Students  = " + students);
+        System.out.println("studentList size  = " + students.size());
     }
 }
