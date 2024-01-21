@@ -2,16 +2,16 @@ package com.ephemzy.spring.data.jpatutrorial.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(
+        exclude = "course"
+)
 public class CourseMaterial {
     @Id
     @SequenceGenerator(
@@ -27,7 +27,10 @@ public class CourseMaterial {
     private String url;
 
     @OneToOne(
-            cascade = CascadeType.ALL
+            cascade = CascadeType.ALL, // it will perform all the defined operations,
+            // normal, if the course is not inserted, the course material will not be inserted as well.
+            fetch = FetchType.LAZY // If we want to fetch course material, it will not fetch the course
+            // itself unless it is changed to eager
     )
     @JoinColumn(
             name = "course_id",
