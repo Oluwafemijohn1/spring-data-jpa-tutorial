@@ -1,6 +1,7 @@
 package com.ephemzy.spring.data.jpatutrorial.repository;
 
 import com.ephemzy.spring.data.jpatutrorial.entity.Course;
+import com.ephemzy.spring.data.jpatutrorial.entity.Student;
 import com.ephemzy.spring.data.jpatutrorial.entity.Teacher;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,29 @@ class CourseRepositoryTest {
         List<Course> courses = courseRepository.findByTitleContaining("D", firstPageTenRecords).getContent();
         System.out.println("Courses Custom" + courses);
         System.out.println("Courses Custom size" + courses.size());
+    }
+
+    @Test
+    public void saveCourseWithStudentAndTeach(){
+        Teacher teacher = Teacher.builder()
+                .firstName("Lizze")
+                .lastName("Morgan")
+                .build();
+
+        Student student = Student.builder()
+                .firstName("Ola")
+                .lastName("Ade")
+                .emailId("olaogun@gmail.com")
+                .build();
+        Course course = Course.builder()
+                .title("AI")
+                .credit(12)
+                .teacher(teacher)
+//                .students(List.of(student))
+                .build();
+        course.addStudents(student);
+
+        courseRepository.save(course);
     }
 
 }
